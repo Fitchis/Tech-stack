@@ -13,57 +13,28 @@
 </head>
 
 <body class="bg-gray-900 text-gray-200 flex flex-col min-h-screen">
-    <header
-        class="bg-gradient-to-r from-gray-800 to-gray-700 text-white p-6 shadow-lg flex justify-between items-center">
-        <div>
-            <h1 class="text-4xl font-extrabold">Blogs Website</h1>
-            <p class="text-lg">Discover a wealth of knowledge through our diverse range of blog posts</p>
-        </div>
-        <div class="dropdown">
-            {{-- <button class="btn btn-primary dropdown-toggle" type="button" id="profileDropdown"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fas fa-user"></i>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="profileDropdown">
-                <li><a class="dropdown-item" href="{{ url('/admin') }}">View Admin Panel</a></li>
-                <li>
-                    <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                    <a class="dropdown-item" href="#"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-                </li> --}}
-        </div>
-    </header>
+    @include('components/navbar')
 
-    <main class="flex-grow max-w-5xl mx-auto p-6 bg-gray-800 rounded-lg shadow-lg mt-6">
-        <h2 class="text-4xl font-semibold mb-4 text-center">Latest Blogs</h2>
-        <p class="text-gray-400 leading-relaxed mb-6 text-center">Check out our latest blog posts below!</p>
-      
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-            @foreach ($post as $posts)
-                <div
-                    class="bg-gray-700 p-6 rounded-lg shadow-xl transition-transform duration-300 transform hover:scale-105 hover:shadow-2xl">
-                    <h3 class="text-2xl font-semibold mb-2">{{ $posts->title }}</h3>
-                    <p class="text-gray-300 mb-4">{{ $posts->description }}</p>
-                    <img src="{{ asset('storage/' . $posts->image_path) }}" class="img-fluid" alt="...">
-                    <a href="{{ route('blogs.show', ['blog' => $posts['id']]) }}"
-                        class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300">Read
-                        More</a>
+        @foreach ($post as $posts)
+        <div class="bg-gray-800 rounded-lg  overflow-hidden shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-xl hover:bg-gray-700 mx-4 my-4">                <div class="flex justify-center">
+                    <img src="{{ asset('storage/' . $posts->image_path) }}" class="w-full h-auto max-h-48 object-contain" alt="{{ $posts->title }}">
                 </div>
-            @endforeach
-        </div>
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold text-white mb-2">{{ $posts->title }}</h3>
+                    <p class="text-white mb-4">{{ Str::limit($posts->description, 100) }}</p>
+                    <a href="{{ route('blogs.show', ['blog' => $posts['id']]) }}"
+                        class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300 font-semibold">
+                        Read More
+                    </a>
+                </div>
+            </div>
+        @endforeach
+    
+    </div>
 
-        <div class="text-center mt-6">
-            <a href="{{ route('blogs.index') }}"
-                class="inline-block bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition duration-300">View
-                All Blogs</a>
-        </div>
-
-    </main>
-
-    <footer class="bg-gray-800 text-white text-center p-4 mt-6">
+    <footer class="bg-gray-800 text-white text-center p-4 fixed bottom-0 left-0 right-0">
         <p>&copy; 2023 My Website. All Rights Reserved.</p>
     </footer>
 
