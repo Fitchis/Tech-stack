@@ -1,18 +1,22 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Post;
+
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
-    
+    protected $blogs = [];
 
     public function index()
     {
-        $blog = Post::all();
+        $blogs = [
+            ['id' => 1, 'title' => 'Blog Post One', 'summary' => 'A brief summary of the first blog post. Learn more about this topic!'],
+            ['id' => 2, 'title' => 'Blog Post Two', 'summary' => 'A brief summary of the second blog post. Explore the insights shared!'],
+            ['id' => 3, 'title' => 'Blog Post Three', 'summary' => 'A brief summary of the third blog post. Dive into the details!'],
+        ];
         
-        return view('blogs.index', compact('blog'));
+        return view('blogs.index', compact('blogs'));
     }
 
     public function create()
@@ -30,12 +34,12 @@ class BlogController extends Controller
         ]);
     
 
-        // $blog = [
-        //     'id' => count($this->blogs) + 1, 
-        //     'title' => $request->input('title'),
-        //     'summary' => $request->input('summary'),
-        //     'content' => $request->input('content'),
-        // ];
+        $blog = [
+            'id' => count($this->blogs) + 1, 
+            'title' => $request->input('title'),
+            'summary' => $request->input('summary'),
+            'content' => $request->input('content'),
+        ];
     
        
         return redirect()->route('blogs.index')->with('success', 'Blog created successfully!');
@@ -43,8 +47,12 @@ class BlogController extends Controller
 
     public function show($id)
     {
-        $blog = Post::find($id);
-        
+        $blog = [
+            'id' => $id,
+            'title' => 'Blog Post ' . $id,
+            'content' => 'This is the content of blog post ' . $id . '. Here you can add the details and insights about the blog topic.'
+        ];
+
         return view('blogs.show', compact('blog'));
     }
 }

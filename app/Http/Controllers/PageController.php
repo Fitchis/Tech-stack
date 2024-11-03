@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Post;
 
 class PageController extends Controller
 {
     public function homepage()
     {
-        $post = Post::all();
-    
-        return view('homepage' , compact('post'));
+        return view('homepage');
     }
 
     public function profile()
